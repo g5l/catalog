@@ -1,0 +1,1 @@
+export const LOGIN_TOKEN = 'X-ZANATTA-DASH-TOKEN'
