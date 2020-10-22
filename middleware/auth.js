@@ -1,13 +1,14 @@
 import { LOGIN_TOKEN } from '~/constant'
 
 export default async function ({ redirect }) {
+  const { API_PATH } = process.env
   let token
 
   if (process.client) {
     token = window.localStorage.getItem(LOGIN_TOKEN)
   }
 
-  const response = await fetch(`${process.env.API_PATH}/dashToken/${token}`)
+  const response = await fetch(`${API_PATH}/dashToken/${token}`)
 
   console.log(response)
   // .then(response => response.json())

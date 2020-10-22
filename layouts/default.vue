@@ -50,7 +50,7 @@ import { LOGIN_TOKEN } from '~/constant'
 export default {
   computed: {
     render () {
-      return this.$route.name !== 'index'
+      return this.$route.name !== 'company'
     },
     productsAmount () {
       return this.$store.state.order.products.length

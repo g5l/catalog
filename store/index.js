@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 const createStore = () => {
   return new Vuex.Store({
     state: () => ({
+      company: {},
       user: {},
       order: {
         products: []
@@ -15,7 +16,8 @@ const createStore = () => {
           total += product.amount * parseFloat(product.price)
         })
         return total
-      }
+      },
+      company: state => state.company
     },
     mutations: {
       addUser (state, user) {
@@ -46,6 +48,11 @@ const createStore = () => {
           user: state.user,
           products: state.order.products
         })
+      },
+      async fetchCompany ({ state }, companySlug) {
+        const company = await this.$axios.$get(`${process.env.API_PATH}/company/${companySlug}`)
+          .then(data => data)
+        state.company = company
       }
     }
   })

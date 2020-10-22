@@ -51,14 +51,16 @@
         </a>
       </div>
     </div>
-    <div class="login__art" />
+    <div class="login__art">
+      <img :src="company.logo" />
+    </div>
   </div>
 </template>
 
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, email } from 'vuelidate/lib/validators'
-import { mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 
 import { LOGIN_TOKEN } from '~/constant'
 
@@ -83,7 +85,15 @@ export default {
     }
   },
   middleware: 'auth',
+  computed: {
+    ...mapGetters(['company'])
+  },
+  mounted () {
+    const companySlug = this.$route.params.company
+    this.fetchCompany(companySlug)
+  },
   methods: {
+    ...mapActions(['fetchCompany']),
     ...mapMutations(['addUser']),
     validateUser () {
       this.$v.$touch()
