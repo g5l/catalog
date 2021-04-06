@@ -1,6 +1,7 @@
 require('dotenv').config()
 
 export default {
+  // type: 'spa',
   /*
   ** Headers of the page
   */
@@ -28,7 +29,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~/plugins/vuex-persist', ssr: false }
+    { src: '~/plugins/vuex-persist', ssr: false },
+    { src: '~/plugins/auth.client.js', ssr: false }
   ],
   /*
   ** Nuxt.js dev-modules

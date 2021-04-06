@@ -9,7 +9,7 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-    "upload": "s3-deploy './dist/**' --cwd './dist/' --region sa-east-1 --bucket catalog-test-production",
+    "upload": "s3-deploy './dist/**' --cwd './dist/' --region sa-east-1 --bucket orderfy-catalog",
     "deploy": "yarn run build && yarn run generate && yarn run upload",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },

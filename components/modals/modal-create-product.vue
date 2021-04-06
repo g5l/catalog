@@ -85,7 +85,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['addProduct']),
+    ...mapMutations('order', ['addProductToOrder']),
     closeModal () {
       this.$emit('close-modal')
     },
@@ -98,7 +98,7 @@ export default {
         note: this.note
       })
 
-      this.addProduct(product)
+      this.addProductToOrder(product)
       this.closeModal()
       this.$emit('success')
     }

@@ -46,6 +46,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 import AInput from '~/components/atoms/a-input.vue'
 import AProduct from '~/components/atoms/a-product.vue'
 import ModalCreateProduct from '~/components/modals/modal-create-product'
@@ -59,10 +61,6 @@ export default {
     ModalSuccess
   },
   middleware: 'auth',
-  async asyncData ({ $axios }) {
-    const products = await $axios.$get(`${process.env.API_PATH}/products`)
-    return { products }
-  },
   data: () => {
     return {
       isModalOpen: false,
@@ -72,14 +70,25 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('company', ['slug']),
+    ...mapGetters('products', ['products']),
     itensFiltered () {
       const filter = this.searchItem.toLowerCase().trim()
+
+      if (this.products.length <= 0) {
+        return []
+      }
+
       return this.products.filter((item, index) => {
         return item.name.toLowerCase().includes(filter) || item.reference.toLowerCase().includes(filter)
       })
     }
   },
+  mounted () {
+    this.fetchProducts(this.slug)
+  },
   methods: {
+    ...mapActions('products', ['fetchProducts']),
     openModal (product) {
       this.isModalOpen = true
       this.currentProduct = {

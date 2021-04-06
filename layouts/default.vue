@@ -7,7 +7,7 @@
             <div class="column is-12">
               <div class="header__content">
                 <div class="header__logo">
-                  <router-link to="/products">
+                  <router-link :to="{ path: 'products' }">
                     <img src="~/assets/logo-dashboard.png">
                   </router-link>
                   <div class="header__title is-hidden-touch">
@@ -15,7 +15,7 @@
                   </div>
                 </div>
                 <div class="icons">
-                  <router-link to="/order">
+                  <router-link :to="{ path: 'order' }">
                     <div class="header__orders">
                       <span
                         v-if="productsAmount"
@@ -45,23 +45,30 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import { LOGIN_TOKEN } from '~/constant'
 
 export default {
   computed: {
+    ...mapGetters('company', ['isCompanyEmpty']),
+    ...mapGetters('order', ['productsAmount']),
     render () {
       return this.$route.name !== 'company'
-    },
-    productsAmount () {
-      return this.$store.state.order.products.length
+    }
+  },
+  mounted () {
+    if (this.isCompanyEmpty) {
+      const companySlug = this.$route.params.company
+      this.fetchCompany(companySlug)
     }
   },
   methods: {
+    ...mapActions('company', ['fetchCompany']),
     logout () {
       if (process.client) {
         window.localStorage.removeItem(LOGIN_TOKEN)
       }
-      this.$router.push({ path: '/' })
+      this.$router.push({ name: 'company' })
     }
   }
 }

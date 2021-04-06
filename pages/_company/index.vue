@@ -1,11 +1,11 @@
 <template>
   <div class="login">
     <div class="login__content">
-      <img class="content_logo" src="~/assets/logo-dashboard.png">
+      <img v-if="company.Profile.logo" class="content_logo" :src="company.Profile.logo">
       <h1 class="content__title">
         Acessar
       </h1>
-      <form @submit.prevent="validateUser">
+      <form class="login__form" @submit.prevent="validateUser">
         <div class="login__input">
           <a-input
             v-model="$v.email.$model"
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="login__art">
-      <img :src="company.logo" />
+      <img :src="company.Profile.logo" />
     </div>
   </div>
 </template>
@@ -86,14 +86,14 @@ export default {
   },
   middleware: 'auth',
   computed: {
-    ...mapGetters(['company'])
+    ...mapGetters('company', ['company'])
   },
   mounted () {
     const companySlug = this.$route.params.company
     this.fetchCompany(companySlug)
   },
   methods: {
-    ...mapActions(['fetchCompany']),
+    ...mapActions('company', ['fetchCompany']),
     ...mapMutations(['addUser']),
     validateUser () {
       this.$v.$touch()
@@ -103,7 +103,7 @@ export default {
       const email = this.email
       const password = this.password
       const url = `${process.env.API_PATH}/dashlogin`
-      const data = { email, password }
+      const data = { email, password, companySlug: this.company.slug }
       const fetchData = {
         method: 'POST',
         mode: 'cors',
@@ -124,7 +124,7 @@ export default {
           if (auth) {
             window.localStorage.setItem(LOGIN_TOKEN, token)
             this.addUser(user)
-            this.$router.push({ name: 'products' })
+            this.$router.push({ path: `${this.company.slug}/products` })
           } else {
             this.error = 'Usuário não encontrado'
           }
@@ -172,12 +172,8 @@ export default {
       }
 
       .content_logo {
-        margin-top: auto;
-        margin-bottom: 50px;
-
-        @media (min-width: 768px) {
-          display: none;
-        }
+        margin: auto auto 0 auto;
+        max-height: 150px;
       }
 
       .content__title {
@@ -185,13 +181,17 @@ export default {
         font-size: 35px;
         color: #292929;
         margin-bottom: 20px;
-        margin-top: auto;
+        margin-top: 50px;
 
         @media (max-width: 768px) {
           display: none;
           text-align: center;
           margin-bottom: 10px;
         }
+      }
+
+      .login__form {
+        margin-bottom: auto;
       }
 
       .login__input {
@@ -222,8 +222,8 @@ export default {
       align-items: center;
       width: 60%;
       height: 100%;
-      background: url('~assets/home.png');
       background-size: cover;
+      background-color: #e6e600;
 
       @media (max-width: 768px) {
         display: none;

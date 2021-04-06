@@ -58,16 +58,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['totalPrice']),
-    products () {
-      return this.$store.state.order.products
-    }
+    ...mapGetters('order', ['totalPrice', 'products'])
   },
   methods: {
-    ...mapActions(['finishOrder']),
-    ...mapMutations(['removeProduct', 'resetOrder']),
+    ...mapActions('order', ['finishOrder']),
+    ...mapMutations('order', ['removeProductOnOrder', 'resetOrder']),
     deleteOrder (productId) {
-      this.removeProduct(productId)
+      this.removeProductOnOrder(productId)
     },
     send () {
       this.finishOrder()
@@ -87,7 +84,7 @@ export default {
       }, 1000)
     },
     sendToProductsList () {
-      this.$router.push({ name: 'products' })
+      this.$router.push({ path: 'products' })
     }
   }
 }
