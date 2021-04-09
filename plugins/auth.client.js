@@ -12,8 +12,6 @@ export default function ({ next }) {
   fetch(`${API_PATH}/dashToken/${token}`)
     .then(response => response.json())
     .then(({ auth }) => {
-      console.log({ auth })
-
       if (auth) {
         return next()
       } else {

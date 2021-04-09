@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="login__content">
-      <img v-if="company.Profile.logo" class="content_logo" :src="company.Profile.logo">
+      <!-- <img v-if="company && company.Profile.logo" class="content_logo" :src="company.Profile.logo"> -->
       <h1 class="content__title">
         Acessar
       </h1>
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="login__art">
-      <img :src="company.Profile.logo" />
+      <!-- <img v-if="company.Profile.logo" :src="company.Profile.logo" /> -->
     </div>
   </div>
 </template>
