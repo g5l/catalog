@@ -19,6 +19,7 @@
     "@nuxtjs/axios": "^5.10.3",
     "@nuxtjs/bulma": "^1.2.1",
     "@nuxtjs/dotenv": "^1.4.0",
+    "lodash": "^4.17.21",
     "nuxt": "^2.0.0",
     "v-mask": "^2.1.0",
     "vuelidate": "^0.7.5",

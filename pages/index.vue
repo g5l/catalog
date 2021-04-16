@@ -3,9 +3,6 @@
     Orderfy
   </div>
 </template>
-<script>
-export default {}
-</script>
 <style>
   #home {
     width: 100%;

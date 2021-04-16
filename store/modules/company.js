@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 const state = () => ({
   company: {
     slug: ''
@@ -6,7 +8,7 @@ const state = () => ({
 
 const getters = {
   isCompanyEmpty: (state) => {
-    return Object.keys(state.company).length <= 0
+    return _.isEmpty(state.company)
   },
   company: state => state.company,
   slug: state => state.company.slug
