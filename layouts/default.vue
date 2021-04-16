@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-if="render" class="header">
+    <div v-if="!render" class="header">
       <div class="container">
         <section class="section">
           <div class="columns">
@@ -53,11 +53,11 @@ export default {
     ...mapGetters('company', ['isCompanyEmpty']),
     ...mapGetters('order', ['productsAmount']),
     render () {
-      return this.$route.name !== 'company'
+      return this.$route.name === 'company' || this.$route.name === 'index'
     }
   },
   mounted () {
-    if (this.isCompanyEmpty) {
+    if (this.isCompanyEmpty && this.$route.params.company) {
       const companySlug = this.$route.params.company
       this.fetchCompany(companySlug)
     }

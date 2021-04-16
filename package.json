@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "upload": "s3-deploy './dist/**' --cwd './dist/' --region sa-east-1 --bucket orderfy-catalog",
-    "deploy": "yarn run build && yarn run generate && yarn run upload",
+    "deploy": "yarn run generate && yarn run upload && yarn invalidate",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E2SWGLS1S97T1L --paths '/*'",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
